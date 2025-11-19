@@ -59,23 +59,19 @@ class GroupDPolicy(Policy):
 
         legal = [c for c in range(COLS) if self.can_play(s, c)]
 
-        # 1️⃣ Si podemos GANAR, ganemos
         for c in legal:
             new_s = self.next_state(s, c, player)
             if self.check_win(new_s, player):
                 return c
 
-        # 2️⃣ Si el rival puede ganar, BLOQUEARLO
         for c in legal:
             new_s = self.next_state(s, c, opponent)
             if self.check_win(new_s, opponent):
                 return c
 
-        # 3️⃣ Preferir el centro
         if 3 in legal:
             return 3
 
-        # 4️⃣ Si no, una columna medianamente buena
         for c in [2, 4, 1, 5, 0, 6]:
             if c in legal:
                 return c
